@@ -94,7 +94,7 @@ def total_gain(text, code_dict, char_freq):
 
 
 if __name__ == "__main__":
-    text = "ALI"
+    text = "Hello, my name is Ali. I am 23 years old."
     char_freq = clc_freq(text) #frequency of each char
     probs = clc_probability(text) #probability of each char
     node = huffman_encoding(char_freq) 
