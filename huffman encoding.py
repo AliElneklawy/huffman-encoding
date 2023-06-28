@@ -3,7 +3,6 @@ import math
 
 class Node:
     def __init__(self, symbol, freq, left=None, right=None) -> None:
-
         self.symbol = symbol
         self.freq = freq
         self.left = left
@@ -81,27 +80,28 @@ def clc_entropy(probs):
     for prob in probs.values():
        entropy += prob * math.log2(prob)
     entropy = -entropy
+    
     return entropy
 
-def total_gain(text, code_dict):
+def total_gain(text, code_dict, char_freq):
     bef_comp = len(text) * 8
     after_comp = 0
     for symbol in code_dict.keys():
-        cnt_char = text.count(symbol)
+        cnt_char = char_freq[symbol]
         after_comp += cnt_char * len(code_dict[symbol])
 
     return (bef_comp, after_comp)
 
 
 if __name__ == "__main__":
-    text = "Hello, my name is Ali. I am 23 years old."
+    text = "ALI"
     char_freq = clc_freq(text) #frequency of each char
     probs = clc_probability(text) #probability of each char
     node = huffman_encoding(char_freq) 
     code_dict = clc_code(node[0])   #huffman code for each char
     entropy = clc_entropy(probs)    #entropy calculation
     efficiency = clc_efficiency(probs, code_dict, entropy) #efficiency calculation
-    bef_comp, after_comp = total_gain(text, code_dict)
+    bef_comp, after_comp = total_gain(text, code_dict, char_freq)
     
     print(f"Huffman code: {code_dict}")
     print(f"Size before compression: {bef_comp} bits\nSize after compression: {after_comp} bits")
